@@ -1,0 +1,19 @@
+{
+  "name": "projet-07-guess-what-back",
+  "version": "1.0.0",
+  "description": "Apotheose section back-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Empanadas/projet-07-guess-what-back.git"
+  },
+  "author": "Nicolas Magassa / Aurélien Cambou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-clock-Empanadas/projet-07-guess-what-back/issues"
+  },
+  "homepage": "https://github.com/O-clock-Empanadas/projet-07-guess-what-back#readme"
+}
