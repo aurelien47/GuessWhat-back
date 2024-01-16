@@ -96,7 +96,8 @@ const userController = {
   }
 
   // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur
-  // 
+  
+  // /!\ à voir si on gère les gestions
   
   
   }
