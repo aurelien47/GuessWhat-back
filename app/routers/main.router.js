@@ -1,10 +1,11 @@
 const express = require('express');
+const userController = require('../controllers/user.controller');
 
 
 
 const router = express.Router();
 
-router.get('/', mainController.homePage);
+//router.get('/', mainController.homePage);
 
 router.route('/signup')
   .post(userController.signupAction);

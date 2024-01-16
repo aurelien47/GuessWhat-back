@@ -22,21 +22,25 @@ const userController = {
       if(!username || !email || !password || !passwordConfirm){
         errors.push('Tous les champs sont obligatoires');
       }
+      console.log(errors);
 
       if(!emailValidator.validate(email)){
         errors.push("Format d'email invalide");
       }
+      console.log(errors);
 
       // force medium
       if(passwordStrength(password).id < 2){
         errors.push('Mot de passe insuffisant');
       }
+      console.log(errors);
 
       if(passwordConfirm !== password){
         errors.push('Les mots de passe ne correspondent pas');
       }
 
       if(errors.length){
+        console.log(errors);
         return res.status(400).json({errors, post: req.body});
       }
 
@@ -59,7 +63,7 @@ const userController = {
 
   // formulaire connexion
   async signinAction(req,res){
-    const { email, password, remenber } = req.body;
+    const { email, password, remember } = req.body;
     const errors = [];
   
   if(!email || !password){
@@ -81,10 +85,6 @@ const userController = {
     if(!isPasswordValid){
       errors.push("Identifiants invalide")
     }
-  }
-
-  if(errors.length){
-    return res.json({errors, post: {email}});
   }
 
   // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur

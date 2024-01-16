@@ -4,6 +4,8 @@
 // charge les variables d'environnement depuis le fichier '.env', utilisé pour stocker des données sensibles
 require('dotenv').config();
 
+const router = require ('./app/routers/main.router')
+
 // import des modèles définit depuis les fichiers model
 const { Theme } = require('./app/models')
 //const { Answer } = require('./app/models')
@@ -19,8 +21,14 @@ const port = process.env.PORT || 3000;
 // on s'assure que la variable est bien définit
 console.log("bonjour", process.env.PORT);
 
+// Ajout d'un body parser
+app.use(express.json()); // Body parser pour les body de format application/json
+app.use(express.urlencoded({ extended: true })); // Body parser pour les body de format application/x-www-urlencoded
+
 // définit une route pour afficher un contenu à la racine
 app.get('/', (req, res) => { res.send('Hello World!') } );
+
+app.use(router);
 
 // définit une route 'themes' pour récupérer tous les thèmes et les retourne au format Json
 app.get('/themes', async (req, res)  => {
