@@ -1,4 +1,4 @@
-// utilisation du framework Express et Sequelize pour créer le serveur web et intéragir avec la BDD
+// utilisation du framework Express et l'OMR Sequelize pour créer le serveur web et intéragir avec la BDD
 // concrètement on configure un serveur Express en définissant des routes pour récupérer les données nécessaires
 
 // charge les variables d'environnement depuis le fichier '.env', utilisé pour stocker des données sensibles
