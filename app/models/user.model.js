@@ -26,6 +26,11 @@ User.init({
     allowNull:false,
     unique: true
   },
+  role_id: {
+    type: DataTypes.INTEGER,
+    allowNull:false,
+    defaultValue: 2
+  },
   password:{
     type: DataTypes.TEXT,
     allowNull: false
