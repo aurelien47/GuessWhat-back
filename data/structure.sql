@@ -25,7 +25,7 @@ CREATE TABLE users (
     "id" int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     "email" text NOT NULL UNIQUE,
     "password" text NOT NULL,
-    "role_id" int NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+    "role_id" int NOT NULL DEFAULT 2 REFERENCES roles(id) ON DELETE CASCADE ,
     "username" text NOT NULL UNIQUE, 
     "created_at" timestamptz NOT NULL DEFAULT NOW(),
     "updated_at" timestamptz 
