@@ -6,10 +6,6 @@ const { User } = require("../models");
 const userController = {
 
   // formulaire inscription
-  signup(req,res){
-    res.render('signup', {error: [], post: {}});
-  },
-
   async signupAction(req,res){
     try {
       const {
@@ -41,7 +37,7 @@ const userController = {
       }
 
       if(errors.length){
-        return res.status(400).render('sinup', {errors, post: req.body});
+        return res.status(400).json({errors, post: req.body});
       }
 
       // une fois toute la vérif formulaire passé et validé on peut inscrire l'utilisateur
@@ -54,7 +50,7 @@ const userController = {
         password: encryptedPassword
       });
 
-      res.redirect('/signin');
+      res.status(201).json();
     
     }catch(err){
       next(err);
@@ -62,10 +58,6 @@ const userController = {
   },
 
   // formulaire connexion
-  signin(_, res){
-    res.render('signin', {errors: [], post: {}});
-  },
-
   async signinAction(req,res){
     const { email, password, remenber } = req.body;
     const errors = [];
@@ -92,18 +84,17 @@ const userController = {
   }
 
   if(errors.length){
-    return res.render('signin', {errors, post: {email}});
+    return res.json({errors, post: {email}});
   }
 
   // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur
   
-  // /!\ à voir si on gère les gestions
+  // /!\ à voir si on gère les sessions
   
-  
-  }
+  res.redirect('/');
 
-
-
-
+  },
 
 }
+
+module.exports = userController;
