@@ -41,10 +41,6 @@ app.get('/', (req, res) => { res.send('Hello World!') } );
 app.use(router);
 
 // définit une route 'themes' pour récupérer tous les thèmes et les retourne au format Json
-app.get('/themes', async (req, res)  => {
-  const themes = await Theme.findAll();
-  res.json(themes);
-})
 
 // définit une route dynamique pour récupérer un thème spécifique selon l'ID, avec les énigmes et réponses associés, retournés au format Json
 app.get('/theme/:id', async (req, res) => {

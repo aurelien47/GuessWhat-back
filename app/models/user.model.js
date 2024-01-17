@@ -39,7 +39,15 @@ User.init({
 // objet en deuxième argument de 'init' pour configurer le modèle avec l'instance Sequelize 'database' et spécifit le nom de la table
 {
   sequelize: database,
-  tableName: 'users'
+  tableName: 'users',
+  defaultScope: {
+    attributes: { exclude: ['password']}
+  },
+  scopes: {
+    login: {
+      attributes: {}
+    }
+  }
 })
 
 // export du modèle 'User' afin qu'il soit utiliser dans d'autres partie de l'application, comme d'autre modules pouvant intéragir en utilisant des méthodes de Sequelize tels que "findAll"

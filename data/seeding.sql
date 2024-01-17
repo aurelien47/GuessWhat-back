@@ -8,9 +8,9 @@ INSERT INTO roles (name) VALUES
 
 -- Peuplement de la table users
 INSERT INTO users (email, password, role_id, username) VALUES 
-('alice@example.com', 'motdepasse123', (SELECT id FROM roles WHERE name = 'Admin'), 'Alice'),
-('bob@example.com', 'motdepasse123', (SELECT id FROM roles WHERE name = 'Player'), 'Bob'),
-('carol@example.com', 'motdepasse123', (SELECT id FROM roles WHERE name = 'Player'), 'Carol');
+('alice@example.com', '$2b$10$rlFKdNVI3x3RMex2WHMHp.GFbo45Qu0RuXch9nYEb57fU.O2YIIm.', (SELECT id FROM roles WHERE name = 'Admin'), 'Alice'),
+('bob@example.com', '$2b$10$rlFKdNVI3x3RMex2WHMHp.GFbo45Qu0RuXch9nYEb57fU.O2YIIm.', (SELECT id FROM roles WHERE name = 'Player'), 'Bob'),
+('carol@example.com', '$2b$10$rlFKdNVI3x3RMex2WHMHp.GFbo45Qu0RuXch9nYEb57fU.O2YIIm.', (SELECT id FROM roles WHERE name = 'Player'), 'Carol');
 
 -- Peuplement de la table themes
 INSERT INTO themes (name) VALUES

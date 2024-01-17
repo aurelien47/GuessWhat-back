@@ -1,6 +1,7 @@
-
 const bcrypt = require('bcrypt');
 const { User } = require("../models");
+const jwt = require('jsonwebtoken');
+const { use } = require('../routers/main.router');
 
 const userController = {
 
@@ -11,8 +12,7 @@ const userController = {
       const {
         username,
         email,
-        password,
-        passwordConfirm
+        password
       } = req.body;
       // une fois toute la vérif formulaire passé et validé on peut inscrire l'utilisateur
       // mais avant on chiffre le MDP
@@ -33,39 +33,37 @@ const userController = {
 
   // formulaire connexion
   async signinAction(req,res){
-    const { email, password, remember } = req.body;
-    const errors = [];
+    const { email, password  } = req.body;
   
-  if(!email || !password){
-    errors.push('tous les champs sont obligatoires');
-  }
-
-  if(!emailValidator.validate(email)){
-    errors.push("Format d'email invalide");
-  }
-  if(errors.length){
-    return res.json({errors, post: {email}});
-  }
-  const user = await User.findOne({ where: {email} });
+  const user = await User.scope("login").findOne({ where: {email} });
 
   // rester le plus flou possible sur l'objet de l'erreur
   if(!user){
-    errors.push("Identifiants invalide")
+    return res.status(401).json({error:"Identifiants invalides"})
   }else {
     // comparer le mot de passe enregistré en BDD (user.password) avec celui saisis par l'utilisateur 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if(!isPasswordValid){
-      errors.push("Identifiants invalide")
+      return res.status(401).json({error:"Identifiants invalides"})
     }
   }
 
-
-
   // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur
-  
   // /!\ à voir si on gère les sessions
-  
-  res.status(200).json(user);
+ console.log(user);
+
+  //delete user.dataValues.password;
+
+  const token = jwt.sign({
+    id: user.id, 
+    username: user.username
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn : "8h"
+  })
+
+  res.status(200).json({token});
 
   },
 
