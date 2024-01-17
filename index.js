@@ -5,7 +5,7 @@
 // charge les variables d'environnement depuis le fichier '.env', utilisé pour stocker des données sensibles
 require('dotenv').config();
 
-const router = require('./app/routers/main.router');
+const router = require('./app/routers');
 
 
 

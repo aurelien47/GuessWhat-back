@@ -7,14 +7,14 @@ const { Theme } = require("../models");
 const verifyJwt = require("../middlewares/verifyJwt");
 const isAdmin = require('../middlewares/isAdmin');
 
-const router = express.Router();
+const authRouter = express.Router();
 
 //router.get('/', mainController.homePage);
 
-router.route('/signup')
+authRouter.route('/signup')
   .post(verifyBodyRegister, userAlreadyExist, userController.signupAction);
 
-router.route('/signin')
+authRouter.route('/signin')
   .post(userController.signinAction);
 
 /*router.get('/themes', verifyJwt, isAdmin, async (req, res)  => {
@@ -22,4 +22,4 @@ router.route('/signin')
     res.json(themes);
   })*/
 
-module.exports = router;
+module.exports = authRouter;
