@@ -53,10 +53,9 @@ const adminController = {
 		}
 	},
 
-	/*
-        addTheme : async (req, res) => {
+  addRiddle: async (req, res) => {
 		try {
-			const { name } = req.body;
+			const { content } = req.body;
 
 			if (!name){
 				return res.status(400).json({error: "Le champ 'Nom de thème est requis'"})
@@ -101,7 +100,7 @@ const adminController = {
 			console.error(error);
 			res.status(500).json({ error: "Erreur lors de la récupération des thèmes"});
 		}
-	}   */
+	}   
 
 
 };
