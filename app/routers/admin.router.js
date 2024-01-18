@@ -1,11 +1,12 @@
 const express = require('express');
-const adminController = require('../controllers/admin.controller');
+const {addTheme, delTheme, getAllTheme} = require('../controllers/admin.controller');
 
 const adminRouter = express.Router();
 
-adminRouter.post('/theme', adminController.addTheme);
-adminRouter.delete('/theme/:id', adminController.delTheme);
-adminRouter.get('/themes', adminController.getAllTheme);
+adminRouter.post('/theme', addTheme);
+adminRouter.delete('/theme/:id', delTheme);
+adminRouter.get('/themes', getAllTheme);
+adminRouter.post('/riddle', adminController.addQuestion); 
    
 
 

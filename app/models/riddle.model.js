@@ -1,3 +1,4 @@
+
 const {DataTypes, Model} = require('sequelize');
 const database = require('../config/database');
 

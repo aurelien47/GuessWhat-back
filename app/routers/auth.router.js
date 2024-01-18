@@ -1,21 +1,21 @@
 const express = require('express');
 const mainController = require('../controllers/main.controller');
-const userController = require('../controllers/user.controller');
+const {signupAction, signinAction} = require('../controllers/user.controller');
 const verifyBodyRegister = require('../middlewares/verifyBodyRegister');
 const userAlreadyExist = require('../middlewares/userAlreadyExist');
 const { Theme } = require("../models");
-const verifyJwt = require("../middlewares/verifyJwt");
-const isAdmin = require('../middlewares/isAdmin');
+const {verifyJwt, isAdmin} = require("../middlewares");
+
 
 const authRouter = express.Router();
 
 //router.get('/', mainController.homePage);
 
 authRouter.route('/signup')
-  .post(verifyBodyRegister, userAlreadyExist, userController.signupAction);
+  .post(verifyBodyRegister, userAlreadyExist, signupAction);
 
 authRouter.route('/signin')
-  .post(userController.signinAction);
+  .post(signinAction);
 
 /*router.get('/themes', verifyJwt, isAdmin, async (req, res)  => {
     const themes = await Theme.findAll();
