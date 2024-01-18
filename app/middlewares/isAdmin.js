@@ -9,7 +9,7 @@ const isAdmin = async (req, res, next) =>{
   else{
     return res.status(403).json({error: "Ressources non autorisé"});
   }
-}
+};
 
 
 
