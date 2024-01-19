@@ -5,7 +5,8 @@ const mainController = {
   getAllTheme: async(req, res) => {
 		try {
 			const themes = await Theme.findAll();
-			res.json(themes);
+			res.status(200).json(themes);
+
 		} 
 		catch (error) {
 			console.error(error);
@@ -14,8 +15,18 @@ const mainController = {
 	},
 
   getOneTheme: async (req, res) => {
-    const theme = await Theme.findByPk(req.params.id, {include: { association: "riddles", include:"answers"}});
-    res.json(theme)
+    try {
+      const theme = await Theme.findByPk(req.params.id, {include: { association: "riddles", include:"answers"}});
+      
+      if (!theme) {
+				return res.status(404).json({error: "Thème non trouvé "});
+			}
+
+      res.status(200).json(theme)
+    } catch (error) {
+      console.error(error);
+			res.status(500).json({ error: "Erreur lors de la récupération du thème"});
+    }
   }
 };
 

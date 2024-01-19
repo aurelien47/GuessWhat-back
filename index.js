@@ -1,4 +1,3 @@
-
 // utilisation du framework Express et l'OMR Sequelize pour créer le serveur web et intéragir avec la BDD
 // concrètement on configure un serveur Express en définissant des routes pour récupérer les données nécessaires
 
@@ -12,10 +11,11 @@ const router = require('./app/routers');
 
 // import du framework Express
 const express = require('express');
+const cors = require('cors');
 
 // création d'une instance d'Express
 const app = express();
-
+app.use(cors());
 // définit le port du serveur, qui utilisera soit la variable d'environnement 'PORT' si elle est définit sinon le port 3000 par défaut
 const port = process.env.PORT || 3000;
 // on s'assure que la variable est bien définit

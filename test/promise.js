@@ -12,7 +12,7 @@ const getAllUsers = async () => {
 } ;
 
 // console.log('avant la promesse : 1');
-// // appel de la fonction, déclenchant l'exécution du script
+// appel de la fonction, déclenchant l'exécution du script
 console.log('0');
 getAllUsers();
 console.log('3');

@@ -6,7 +6,7 @@ const adminRouter = express.Router();
 
 adminRouter.post('/theme', themeAlreadyExist, addTheme);
 adminRouter.delete('/theme/:id', delTheme);
-adminRouter.post('/riddle', addRiddle); 
+adminRouter.post('/theme/:id/riddle', addRiddle); 
    
 
 

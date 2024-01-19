@@ -44,17 +44,37 @@ const adminController = {
 
   addRiddle: async (req, res) => {
 		try {
-			const { content, wiki, indicator } = req.body;
+			const theme_id = req.params.id;
+			const { content, wiki, indicator, answers } = req.body;
 
-			if (!content || !wiki || !indicator){
+			if (!content || !wiki || !indicator || !answers){
 				return res.status(400).json({error: "Les champ sont requis"})
+			}
+			
+			
+
+			// Vérifier s'il y a bien 5 réponses dans le tableau answers 
+			// vérifier s'il y a bien une bonne réponse dans le tableau
+			// vérifier si toutes les réponses sont bien formatées (json ?)
+
+      if (answers.length !==5) {
+				return res.status(400).json({error: "il doit y avoir exactement 5 reponses"}); //(??) ou et le tabelau ? comment le créer  ? 
+			}
+
+			const correctAnswers = answers.filter(answer => answer.isCorrect);// filtrer les reponses correctes
+
+			if (correctAnswers.length !== 1) {
+				return res.status(400).json({ error: "Il doit y avoir une et une seule bonne réponse" }); // verifier qu'il y ai une seule bonne reponse
 			}
 
 			const riddle = await Riddle.create({
 				content,
 				wiki,
-				indicator
+				indicator,
+				theme_id
 			});
+
+			// await riddle.addAnswers(answers);
 			res.status(201).json(riddle);
 		} 
 		catch (error) {
