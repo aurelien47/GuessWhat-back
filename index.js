@@ -8,9 +8,6 @@ require('dotenv').config();
 const router = require('./app/routers');
 
 
-
-// import des modèles définit depuis les fichiers model
-const { Theme } = require('./app/models')
 //const { Answer } = require('./app/models')
 
 // import du framework Express
@@ -43,17 +40,7 @@ app.use(router);
 // définit une route 'themes' pour récupérer tous les thèmes et les retourne au format Json
 
 // définit une route dynamique pour récupérer un thème spécifique selon l'ID, avec les énigmes et réponses associés, retournés au format Json
-app.get('/theme/:id', async (req, res) => {
-  const theme = await Theme.findByPk(req.params.id, {include: { association: "riddles", include:"answers"}});
-  res.json(theme)
-})
 
-/*
-app.get('/answer', async (req, res) => {
-  const answer = await Answer.findAll();
-  res.json(answer)
-})
-*/
 app.use((err, req, res, next) => {
   console.log('middleware d\'erreur', err);
   res.status(500).json(err);

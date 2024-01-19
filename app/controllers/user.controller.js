@@ -24,7 +24,7 @@ const userController = {
         password: encryptedPassword
       });
 
-      res.status(201).json();
+      res.status(201).json({status: 'success'});
     
     }catch(err){
       next(err);

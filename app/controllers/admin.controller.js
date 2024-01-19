@@ -42,67 +42,44 @@ const adminController = {
 		}
 	},
 
-	getAllTheme: async(req, res) => {
-		try {
-			const themes = await Theme.findAll();
-			res.json(themes);
-		} 
-		catch (error) {
-			console.error(error);
-			res.status(500).json({ error: "Erreur lors de la récupération des thèmes"});
-		}
-	},
-
   addRiddle: async (req, res) => {
 		try {
-			const { content } = req.body;
+			const { content, wiki, indicator } = req.body;
 
-			if (!name){
-				return res.status(400).json({error: "Le champ 'Nom de thème est requis'"})
+			if (!content || !wiki || !indicator){
+				return res.status(400).json({error: "Les champ sont requis"})
 			}
 
-			const theme = await Theme.create({
-				name
+			const riddle = await Riddle.create({
+				content,
+				wiki,
+				indicator
 			});
-			res.status(201).json(theme);
+			res.status(201).json(riddle);
 		} 
 		catch (error) {
 				console.error(error);
-				res.status(500).json({ error: 'Erreur lors de la création du thème'})
+				res.status(500).json({ error: 'Erreur lors de la création de la devinette'})
 			}
 	},
 
-	delTheme: async(req, res) => {
+	delRiddle: async(req, res) => {
 		try {
-			const themeId = req.params.id;
-			const existTheme = await Theme.findByPk(themeId);
+			const riddleId = req.params.id;
+			const existRiddle = await Riddle.findByPk(riddleId);
 
-			if (!existTheme) {
-				return res.status(404).json({error: "Thème non trouvé "});
+			if (!existRiddle) {
+				return res.status(404).json({error: "Devinette non trouvé "});
 			}
 
-			await existTheme.destroy();
+			await existRiddle.destroy();
+			res.sendStatus(204);
 		} 
 		catch (error) {
 			console.error(error);
-			res.status(500).json({ error: "Erreur lors de la récupération des thèmes"});
+			res.status(500).json({ error: "Erreur lors de la récupération des Devinette"});
 		}
 	},
-
-	// riddle
-
-        getAllTheme: async(req, res) => {
-		try {
-			const themes = await Theme.findAll();
-			res.json(themes);
-		} 
-		catch (error) {
-			console.error(error);
-			res.status(500).json({ error: "Erreur lors de la récupération des thèmes"});
-		}
-	}   
-
-
 };
 
 
