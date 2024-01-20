@@ -47,25 +47,34 @@ const adminController = {
 			const theme_id = req.params.id;
 			const { content, wiki, indicator, answers } = req.body;
 
+			const theme = await Theme.findByPk(theme_id);
+			if (!theme) {
+				return res.status(400).json({ error: "Le thème spécifié n'existe pas." });
+			}
+
 			if (!content || !wiki || !indicator || !answers){
-				return res.status(400).json({error: "Les champ sont requis"})
+				return res.status(400).json({error: "Tous les champs sont requis"})
 			}
-			
-			
 
-			// Vérifier s'il y a bien 5 réponses dans le tableau answers 
-			// vérifier s'il y a bien une bonne réponse dans le tableau
+			// Vérifier s'il y a bien 5 réponses dans le tableau answers
+			if (answers.length !==5) {
+				return res.status(400).json({error: "Il doit y avoir exactement 5 reponses"}); //(??) ou et le tabelau ? comment le créer  ? 
+			} 
+
 			// vérifier si toutes les réponses sont bien formatées (json ?)
+			const validAnswers = answers.every(answer => answer.content && typeof answer.is_good_answer === 'boolean');
 
-      if (answers.length !==5) {
-				return res.status(400).json({error: "il doit y avoir exactement 5 reponses"}); //(??) ou et le tabelau ? comment le créer  ? 
+			if (!validAnswers) {
+				return res.status(400).json({ error: "Chaque réponse doit avoir une propriété 'content' et 'isCorrect'" });
 			}
 
-			const correctAnswers = answers.filter(answer => answer.isCorrect);// filtrer les reponses correctes
-
+			// vérifier s'il y a bien une bonne réponse dans le tableau
+			const correctAnswers = answers.filter(answer => answer.is_good_answer);// filtrer les reponses correctes
+			
 			if (correctAnswers.length !== 1) {
 				return res.status(400).json({ error: "Il doit y avoir une et une seule bonne réponse" }); // verifier qu'il y ai une seule bonne reponse
 			}
+
 
 			const riddle = await Riddle.create({
 				content,
@@ -74,6 +83,15 @@ const adminController = {
 				theme_id
 			});
 
+			await Promise.all(
+				answers.map(async (answer) => {
+					await riddle.createAnswer({
+						content: answer.content,
+						is_good_answer: answer.is_good_answer,
+					});
+				})
+			);
+	
 			// await riddle.addAnswers(answers);
 			res.status(201).json(riddle);
 		} 
