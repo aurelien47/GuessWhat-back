@@ -43,8 +43,3 @@ INSERT INTO answers (content, is_good_answer, riddle_id) VALUES
 ('Variable', false ,3);
 
 COMMIT;
-
-
-
-
-

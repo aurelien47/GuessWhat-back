@@ -24,4 +24,3 @@ adminRouter.post('/theme/:id/riddle', addRiddle);
 
 
 module.exports = adminRouter;
-

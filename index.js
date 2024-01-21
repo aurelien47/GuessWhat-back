@@ -47,5 +47,3 @@ app.use((err, req, res, next) => {
 })
 // port d'écoute du serveur Express avec un retour de son port.
 app.listen(port, () => { console.log(`Server running on port ${port}`) } );      
-
-

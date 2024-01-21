@@ -33,8 +33,3 @@ router.use('/admin', verifyJwt, isAdmin, adminRouter);
 
 
 module.exports = router;
-
-
-
-
-
