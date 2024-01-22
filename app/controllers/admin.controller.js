@@ -131,23 +131,32 @@ const adminController = {
 			}
 	},
 
+
 	delRiddle: async(req, res) => {
 		try {
 			const riddleId = req.params.id;
-			const existRiddle = await Riddle.findByPk(riddleId);
+			const riddle = await Riddle.findByPk(riddleId, {
+				include: 'answers'
+			});
 
-			if (!existRiddle) {
-				return res.status(404).json({error: "Devinette non trouvé "});
-			}
+			if (!riddle) {
+				return res.status(404).json({error: "Cette devinette a déjà été supprimé"});
+			};
 
-			await existRiddle.destroy();
+			await Promise.all(
+				riddle.answers.map(
+					answer => answer.destroy()
+				)
+			);
+
+			await riddle.destroy();
 			res.sendStatus(204);
 		} 
 		catch (error) {
 			console.error(error);
 			res.status(500).json({ error: "Erreur lors de la récupération des Devinette"});
 		}
-	},
+	}	
 };
 
 
