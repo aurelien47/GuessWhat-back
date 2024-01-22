@@ -3,15 +3,16 @@ const router = express.Router(); // creation routeur avec express.Router()
 const userProfile = require('../controllers/userProfile.controller'); // on importe userprofile controller
 
 
-router.get('/profile', userProfile.getAllUserProfile); // on crée une route pour récupérer tous les userprofiles
+router.get('/profile', verifyJWT, userProfileController.getUserProfile); // verifyJWT sera exécuté en premier pour s'assurer que l'utilisateur 
+//est authentifié avant de permettre l'accès à modifyOneUserProfile  
 
-router.get('/profile/:id', userProfile.getOneUserProfile); // on crée une route pour récupérer un userprofile
+router.put('/profile/:id', verifyJWT, userProfileMiddleware, userProfile.modifyOneUserProfile); // route pour que l'user modifie son profile
+// execution de verifyJWT pour l'authentification et userProfileMiddleware pour s'assurer que l'utilisateur ne modifie que son propre profil.
 
-router.post('/profile', userProfile.createOneUserProfile); // on crée une route pour créer un userprofile
-
-router.put('/profile/:id', userProfile.modifyOneUserProfile); // on crée une route pour modifier un userprofile
-
-router.delete('/profile/:id', userProfile.deleteOneUserProfile); // on crée une route pour supprimer un userprofile
+router.delete('/profile/:id', verifyJWT, userProfileMiddleware, userProfile.deleteOneUserProfile); // route pour que l'user supprime son profile
 
 module.exports = router; // on exporte le router
+
+
+
 
