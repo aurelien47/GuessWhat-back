@@ -2,7 +2,7 @@ const { Theme } = require ("../models")
 
 const mainController = {
 
-  getAllTheme: async(req, res) => {
+  async getAllTheme( _, res){
 		try {
 			const themes = await Theme.findAll();
 			res.status(200).json(themes);
@@ -14,7 +14,7 @@ const mainController = {
 		}
 	},
 
-  getOneTheme: async (req, res) => {
+  async getOneTheme(req, res){
     try {
       const theme = await Theme.findByPk(req.params.id, {include: { association: "riddles", include:"answers"}});
       
