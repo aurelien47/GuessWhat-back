@@ -1,11 +1,11 @@
-const {user} = require('../models/user.model');   
+const {User} = require ('../models/user.model');   
 
 const userProfileController = {             
 
     getUserProfile: async (req, res) => {
         try {
             const userId = req.params.id;
-            const existUser = await user.findByPk(userId);
+            const existUser = await User.findByPk(userId);
             if (!existUser) {
                 return res.status(404).json({error: "Utilisateur non trouvé "});
             };
@@ -21,7 +21,7 @@ const userProfileController = {
 
 modifyOneUserProfile = async (req, res) => {
     try {
-        const user = await db.User.findByPk(req.params.id);
+        const user = await User.findByPk(req.params.id); 
         if (!user) {
             return res.status(404).send('Utilisateur non trouvé');
         }
@@ -39,7 +39,7 @@ deleteOneUserProfile = async (req, res) => {
 
     try {               
 
-        const user = await db.User.findByPk(req.params.id); 
+        const user = await User.findByPk(req.params.id); 
         if (!user) {
             return res.status(404).send('Utilisateur non trouvé');
         }   
