@@ -4,4 +4,4 @@ const userAlreadyExist = require('./userAlreadyExist');
 const verifyBodyRegister = require('./verifyBodyRegister');
 
 
-module.exports = {isAdmin, verifyJwt, userAlreadyExist, verifyBodyRegister};
+module.exports = {isAdmin, verifyJwt, userAlreadyExist, verifyBodyRegister}; 
