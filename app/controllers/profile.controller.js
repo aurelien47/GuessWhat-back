@@ -1,8 +1,8 @@
 const {User} = require ('../models');   
 
-const userProfileController = {             
+const profileController = {             
 
-    getUserProfile: async (req, res) => {
+    async getUserProfile (req, res) {
         try {
             const userId = req.params.id;
             console.log('user id', userId);
@@ -19,7 +19,8 @@ const userProfileController = {
             res.status(500).json({ error: "Erreur lors de la récupération de l'utilisateur"});
         }
     },
-    modifyOneUserProfile : async (req, res) => {
+
+    async modifyOneUserProfile (req, res) {
         try {
             const user = await User.findByPk(req.params.id); 
             if (!user) {
@@ -28,6 +29,8 @@ const userProfileController = {
     
             // Mettre à jour l'utilisateur avec req.body
             // Assurez-vous de valider et de nettoyer req.body avant de l'utiliser
+
+            // Prévoir le cas d'une modificiation de mot de passe
             const updatedUser = await user.update(req.body);
             res.json(updatedUser);
         } catch (error) {
@@ -35,7 +38,7 @@ const userProfileController = {
         }
     },
 
-    deleteOneUserProfile : async (req, res) => {        
+    async deleteOneUserProfile (req, res) {        
 
         try {               
     
@@ -61,7 +64,7 @@ const userProfileController = {
 
 
 
-module.exports = userProfileController;
+module.exports = profileController;
 
 
 

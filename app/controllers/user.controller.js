@@ -27,43 +27,53 @@ const userController = {
       res.status(201).json({status: 'success'});
     
     }catch(err){
-      next(err);
+        console.error(err);
+        res.status(401).json({ error: "le nom d'utilisateur ou l'email est déjà utilisé"});
+        next(err);
     }
-  },
+      
+    },
 
   // formulaire connexion
-  async signinAction(req,res){
+  async signinAction (req,res) {
+    try {
+
     const { email, password  } = req.body;
   
-  const user = await User.scope("login").findOne({ where: {email} });
+    const user = await User.scope("login").findOne({ where: {email} });
 
-  // rester le plus flou possible sur l'objet de l'erreur
-  if(!user){
-    return res.status(401).json({error:"Identifiants invalides"})
-  }else {
-    // comparer le mot de passe enregistré en BDD (user.password) avec celui saisis par l'utilisateur 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if(!isPasswordValid){
+    // rester le plus flou possible sur l'objet de l'erreur
+    if(!user){
       return res.status(401).json({error:"Identifiants invalides"})
+    } else {
+      // comparer le mot de passe enregistré en BDD (user.password) avec celui saisis par l'utilisateur 
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if(!isPasswordValid){
+        return res.status(401).json({error:"Identifiants invalides"})
+      }
     }
+      // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur
+      // /!\ à voir si on gère les sessions
+    console.log(user);
+
+    //delete user.dataValues.password;
+
+    const token = jwt.sign({
+      id: user.id, 
+      username: user.username
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn : "8h"
+    })
+
+    res.status(200).json({token});
+  } catch (error) {
+    console.error(error);
+    // Envoyer une réponse d'erreur générique
+    return res.status(500).json({ error: "Une erreur interne s'est produite" });
   }
 
-  // une fois les vérif formualaire connexion passé et validé on peut connecter l'utilisateur
-  // /!\ à voir si on gère les sessions
- console.log(user);
-
-  //delete user.dataValues.password;
-
-  const token = jwt.sign({
-    id: user.id, 
-    username: user.username
-  },
-  process.env.JWT_SECRET,
-  {
-    expiresIn : "8h"
-  })
-
-  res.status(200).json({token});
 
   },
 

@@ -16,6 +16,7 @@ router.use(mainRouter);
 // route pour l'authentification
 router.use(authRouter);
 router.use('/user', verifyJwt, userRouter);
+//router.use('/score', verifyJwt, scoreRouter);// changer user router par l'autre nom de fichier dans router
 router.use('/admin', verifyJwt, isAdmin, adminRouter);
 
 
