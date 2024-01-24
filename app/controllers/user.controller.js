@@ -1,19 +1,16 @@
 const bcrypt = require('bcrypt');
-const { User } = require("../models");
-const jwt = require('jsonwebtoken');
+const { User } = require('../models');
+const generateToken = require('../utils/generateToken');
 
 
 const userController = {
 
   // formulaire inscription
-  async signupAction(req,res, next){      
+  async signupAction(req, res, next){      
     try {
       console.log("ici on est dans le controller, on a passé la vérification du body")
-      const {
-        username,
-        email,
-        password
-      } = req.body;
+      const { username, email, password } = req.body;
+      
       // une fois toute la vérif formulaire passé et validé on peut inscrire (enregistrer) l'utilisateur en BDD
       // mais avant on chiffre le MDP
       encryptedPassword = await bcrypt.hash(password, 10);
@@ -67,12 +64,9 @@ const userController = {
       expiresIn : "8h"
     })
 
-    res.status(200).json({token});
-  } catch (error) {
-    console.error(error);
-    // Envoyer une réponse d'erreur générique
-    return res.status(500).json({ error: "Une erreur interne s'est produite" });
-  }
+
+  const token = generateToken(user); 
+
 
 
   },
