@@ -3,7 +3,7 @@ const authRouter = require('./auth.router');
 const adminRouter = require('./admin.router');
 const mainRouter = require('./main.router');
 
-const {isAdmin, verifyJwt} = require('../middlewares');
+const { isAdmin, verifyJwt } = require('../middlewares');
 
 const router = express.Router();
 
