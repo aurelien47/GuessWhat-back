@@ -1,7 +1,6 @@
 const express = require('express');
-const {signupAction, signinAction} = require('../controllers/user.controller');
-const verifyBodyRegister = require('../middlewares/verifyBodyRegister.middleware');
-const userAlreadyExist = require('../middlewares/userAlreadyExist.middleware');
+const { signupAction, signinAction } = require('../controllers/user.controller');
+const { verifyBodyRegister, userAlreadyExist } = require('../middlewares');
 
 
 const authRouter = express.Router();
