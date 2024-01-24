@@ -25,8 +25,7 @@ const userController = {
     
     }catch(err){
         console.error(err);
-        res.status(401).json({ error: "le nom d'utilisateur ou l'email est déjà utilisé"});
-        next(err);
+        return res.status(401).json({ error: "le nom d'utilisateur ou l'email est déjà utilisé"});
     }
       
     },
@@ -55,22 +54,17 @@ const userController = {
 
     //delete user.dataValues.password;
 
-    const token = jwt.sign({
-      id: user.id, 
-      username: user.username
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn : "8h"
-    })
-
 
   const token = generateToken(user); 
 
+  res.status(200).json({token});
 
+  }catch(error){
+    console.error(err);
+    return res.status(500).json({ error: err});
+  }
 
-  },
-
+},
 }
 
 module.exports = userController;
