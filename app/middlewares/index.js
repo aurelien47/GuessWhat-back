@@ -8,4 +8,6 @@ const riddleAlreadyExist = require('./riddleAlreadyExist.middleware');
 const verifyDuplicate = require('./verifyDuplicate.middleware');
 
 
+
 module.exports = {isAdmin, verifyJwt, userAlreadyExist, verifyBodyRegister, themeAlreadyExist, verifyBodyRiddle, riddleAlreadyExist, verifyDuplicate};
+
