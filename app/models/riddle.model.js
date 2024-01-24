@@ -17,13 +17,13 @@ Riddle.init({
   },
   indicator:{
     type: DataTypes.TEXT,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
 },
 {
   sequelize: database,
-  tableName: 'riddles'
+  tableName: 'riddles',
+  indexes: [{unique: true, fields:['content', 'theme_id']}]
 })
 
 module.exports = Riddle;

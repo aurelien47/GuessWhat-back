@@ -1,4 +1,4 @@
-const { Theme, Riddle } = require('../models');
+const { Theme, Riddle, Answer } = require('../models');
 
 
 const adminController = {
@@ -43,16 +43,10 @@ const adminController = {
 		}
 	},
 
-  async addRiddle(req, res, next){
+  async addRiddle(req, res){
 		try {
 			const theme_id = req.params.id;
 			const { content, wiki, indicator, answers } = req.body;
-
-			// vérif si le thème existe ??? nécéssaire ?
-			/*const theme = await Theme.findByPk(theme_id);
-			if (!theme) {
-				return res.status(400).json({ error: "Le thème spécifié n'existe pas." });
-			};*/
 
 			const riddle = await Riddle.create({
 				content,
@@ -60,22 +54,18 @@ const adminController = {
 				indicator,
 				theme_id
 			});
-
-			await Promise.all(
-				answers.map(async (answer) => {
-					await riddle.createAnswer({
-						content: answer.content,
-						is_good_answer: answer.is_good_answer,
-					});
-				})
-			);
-	
-			// await riddle.addAnswers(answers);
+			const answersToCreate = answers.map((answer) => {
+				return {
+					...answer,
+					riddle_id: riddle.id
+				}
+			})
+			const createdAnswers = await Answer.bulkCreate(answersToCreate);
+			console.log(`les réponses créé pour la riddle avec l'id ${riddle.id}`, createdAnswers)
 			return res.status(201).json({status: 'success'});
 		} 
 		catch (error) {
 				console.error(error);
-				next(error);
 				return res.status(500).json({ error: 'Erreur lors de la création de la devinette'})
 			}
 	},
@@ -92,13 +82,7 @@ const adminController = {
 				return res.status(404).json({error: "Cette devinette a déjà été supprimé"});
 			};
 
-			await Promise.all(
-				riddle.answers.map(
-					answer => answer.destroy()
-				)
-			);
-
-			await riddle.destroy();
+			await riddle.destroy(); //vu qu'on est en ondelete cascade cela supprimera les answer liéé
 			res.sendStatus(204);
 		} 
 		catch (error) {

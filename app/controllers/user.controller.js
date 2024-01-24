@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const { User } = require("../models");
-const jwt = require('jsonwebtoken');
+const { User } = require('../models');
+const generateToken = require('../utils/generateToken');
 
 
 const userController = {
@@ -51,14 +51,7 @@ const userController = {
 
   //delete user.dataValues.password;
 
-  const token = jwt.sign({
-    id: user.id, 
-    username: user.username
-  },
-  process.env.JWT_SECRET,
-  {
-    expiresIn : "8h"
-  })
+  const token = generateToken(user); 
 
   res.status(200).json({token});
 

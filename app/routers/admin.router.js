@@ -2,7 +2,7 @@ const express = require('express');
 const {addTheme, delTheme, addRiddle, delRiddle} = require('../controllers/admin.controller');
 const themeAlreadyExist = require('../middlewares/themeAlreadyExist');
 const verifyBodyRiddle = require('../middlewares/verifyBodyRiddle');
-const riddleAlreadyExist = require('../middlewares/riddleAlreadyExists')
+const riddleAlreadyExist = require('../middlewares/riddleAlreadyExist');
 
 const adminRouter = express.Router();
 

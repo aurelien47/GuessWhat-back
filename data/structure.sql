@@ -1,18 +1,6 @@
 BEGIN;
 
-DROP TABLE  IF EXISTS play;
-
-DROP TABLE  IF EXISTS users;
-
-DROP TABLE  IF EXISTS roles;
-
-DROP TABLE  IF EXISTS answers; 
-
-DROP TABLE  IF EXISTS riddles;
-
-DROP TABLE  IF EXISTS themes;
-
-
+DROP TABLE  IF EXISTS play, users, roles, answers, riddles, themes;
 
 CREATE TABLE roles (
    "id" int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
@@ -44,19 +32,20 @@ CREATE TABLE riddles(
    "theme_id" int NOT NULL REFERENCES themes(id) ON DELETE CASCADE,
    "content" text NOT NULL,
    "wiki" text NOT NULL,
-   "indicator" text NOT NULL UNIQUE,
+   "indicator" text NOT NULL,
    "created_at" timestamptz NOT NULL DEFAULT NOW(),
-    "updated_at" timestamptz
+    "updated_at" timestamptz,
+    UNIQUE("content", "theme_id")
 );
 
 CREATE TABLE answers(
     "id"  int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
-    "content" text NOT NULL UNIQUE,
+    "content" text NOT NULL,
     "is_good_answer" boolean NOT NULL,
     "riddle_id" int NOT NULL REFERENCES riddles(id) ON DELETE CASCADE,
     "created_at" timestamptz NOT NULL DEFAULT NOW(),    
-    "updated_at" timestamptz
-
+    "updated_at" timestamptz,
+    UNIQUE("content", "riddle_id")
 );
 
 CREATE TABLE play(
