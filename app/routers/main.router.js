@@ -1,10 +1,10 @@
 const express = require('express');
-const mainController = require ('../controllers/main.controller')
+const { getAllTheme, getOneTheme } = require ('../controllers/main.controller');
 
 const mainRouter = express.Router();
 
-mainRouter.get('/themes', mainController.getAllTheme);
-mainRouter.get('/theme/:id', mainController.getOneTheme);
+mainRouter.get('/themes', getAllTheme);
+mainRouter.get('/theme/:id', getOneTheme);
 
 
 

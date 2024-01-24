@@ -4,7 +4,7 @@ const adminRouter = require('./admin.router');
 const mainRouter = require('./main.router');
 const userRouter = require('./user.router');
 
-const {isAdmin, verifyJwt} = require('../middlewares');
+const { isAdmin, verifyJwt } = require('../middlewares');
 
 const router = express.Router();
 
