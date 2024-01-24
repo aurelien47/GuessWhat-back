@@ -4,7 +4,7 @@ const mainController = require ('../controllers/main.controller')
 const mainRouter = express.Router();
 
 mainRouter.get('/themes', mainController.getAllTheme);
-mainRouter.get('/theme/:id', mainController.getOneTheme )
+mainRouter.get('/theme/:id', mainController.getOneTheme);
 
 
 
