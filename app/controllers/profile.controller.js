@@ -1,4 +1,5 @@
-const {User} = require ('../models');   
+const { User } = require ('../models');  
+const bcrypt = require('bcrypt'); 
 
 const profileController = {             
 
@@ -22,19 +23,38 @@ const profileController = {
 
     async modifyOneUserProfile (req, res) {
         try {
-            const user = await User.findByPk(req.params.id); 
+            const user = await User.findByPk(req.params.id, {
+                attributes: ["password","id"]
+            }); 
             if (!user) {
                 return res.status(404).send('Utilisateur non trouvé');
             }
-    
+            console.log('user', user.password)
             // Mettre à jour l'utilisateur avec req.body
             // Assurez-vous de valider et de nettoyer req.body avant de l'utiliser
+            let updatedData = req.body;
 
+            
             // Prévoir le cas d'une modificiation de mot de passe
-            const updatedUser = await user.update(req.body);
-            res.json(updatedUser);
+            if(updatedData.password) {
+                console.log('updatedData', updatedData);
+                const isSamePassword = await bcrypt.compare(updatedData.password, user.password); //metode .compare
+
+                if (isSamePassword) {
+                    return res.status(400).send("Le nouveau mot de passe ne peut pas être le même que l'actuel.");
+                }
+                updatedData.password = await bcrypt.hash(updatedData.password, 10);
+            }
+            
+            await user.update(updatedData);
+            await user.save();
+            res.status(201).json({status: 'success'});
+
+            
         } catch (error) {
+            console.error(error);
             res.status(500).send('Erreur lors de la modification du profil');
+
         }
     },
 
