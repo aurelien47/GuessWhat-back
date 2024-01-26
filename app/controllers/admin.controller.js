@@ -35,7 +35,7 @@ const adminController = {
 			};
 
 			await existTheme.destroy();
-			res.status(204).json({status: 'success'});
+			res.status(200).json({status: 'success'});
 		} 
 		catch (error) {
 			console.error(error);
@@ -83,7 +83,7 @@ const adminController = {
 			};
 
 			await riddle.destroy(); //vu qu'on est en ondelete cascade cela supprimera les answer liéé
-			res.status(204).json({status: 'success'});;
+			res.status(200).json({status: 'success'});;
 		} 
 		catch (error) {
 			console.error(error);
