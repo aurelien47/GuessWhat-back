@@ -13,8 +13,8 @@ router.put('/profile/:id', verifyUserProfile, modifyOneUserProfile); // route po
 
 router.delete('/profile/:id', verifyUserProfile, deleteOneUserProfile); // route pour que l'user supprime son profile
 
+
+
+
+
 module.exports = router; // on exporte le router
-
-
-
-
