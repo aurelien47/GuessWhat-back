@@ -7,8 +7,20 @@ const verifyBodyRiddle = require('./riddleAlreadyExist.middleware');
 const riddleAlreadyExist = require('./riddleAlreadyExist.middleware');
 const verifyDuplicate = require('./verifyDuplicate.middleware');
 const verifyUserProfile = require('./verifyUserProfile.middleware');
+const scoringMiddleware = require('./scoringMiddleware.middleware'); //scoringBoard
 
 
 
-module.exports = {isAdmin, verifyJwt, userAlreadyExist, verifyBodyRegister, themeAlreadyExist, verifyBodyRiddle, riddleAlreadyExist, verifyDuplicate, verifyUserProfile};
+module.exports = { 
+  isAdmin, 
+  verifyJwt, 
+  userAlreadyExist, 
+  verifyBodyRegister, 
+  themeAlreadyExist, 
+  verifyBodyRiddle, 
+  riddleAlreadyExist, 
+  verifyDuplicate, 
+  verifyUserProfile, 
+  scoringMiddleware, //scoreBoard
+};
 
