@@ -46,7 +46,7 @@ const profileController = {
         try {               
             const user = req.user;
             await user.destroy();
-            return res.status(204).json({error: 'Utilisateur supprimé'});
+            return res.status(200).json({status: 'Utilisateur supprimé'});
         }   
         catch (error) {
             return res.status(500).json({error: 'Erreur lors de la suppression du profil'});
