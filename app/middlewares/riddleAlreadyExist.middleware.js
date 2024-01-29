@@ -16,7 +16,7 @@ const riddleAlreadyExist = async (req, res, next) => {
 
     next();
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ error: 'Erreur lors de la vérification de l\'existence de la devinette' });
     }
 };
 

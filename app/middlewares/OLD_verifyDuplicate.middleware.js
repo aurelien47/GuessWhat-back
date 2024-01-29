@@ -1,4 +1,4 @@
-const checkDuplication = (req, res, next) => {
+/*const checkDuplication = (req, res, next) => {
 
     let answersArray = req.body.answers;
 
@@ -14,4 +14,4 @@ const checkDuplication = (req, res, next) => {
     next();
 }
 
-module.exports = checkDuplication;
+module.exports = checkDuplication;*/
