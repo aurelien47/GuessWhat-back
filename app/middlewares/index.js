@@ -7,7 +7,7 @@ const verifyBodyRiddle = require('./riddleAlreadyExist.middleware');
 const riddleAlreadyExist = require('./riddleAlreadyExist.middleware');
 const verifyDuplicate = require('./verifyDuplicate.middleware');
 const verifyUserProfile = require('./verifyUserProfile.middleware');
-const scoringMiddleware = require('./scoringMiddleware.middleware'); //scoringBoard
+const scoreAllReadyExist = require('./scoreAlreadyExist.middleware');
 
 
 
@@ -21,6 +21,7 @@ module.exports = {
   riddleAlreadyExist, 
   verifyDuplicate, 
   verifyUserProfile, 
-  scoringMiddleware, //scoreBoard
+  scoreAllReadyExist
+
 };
 
