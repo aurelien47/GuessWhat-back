@@ -1,3 +1,4 @@
+const { parse } = require('dotenv');
 const { Play, User, Theme } = require('../models'); // on va chercher le model play pour les score en BDD
 const { Sequelize } = require('sequelize');
 
@@ -36,6 +37,8 @@ const playingController = {
         const  { theme_id, score, errors, count_indicators }  = req.body; // verifier que l'user exist et verifier que le theme existe avec les associations
 
         // Enregistrement d'un session de Devinette (theme)
+        //const parseScore = new Number(score);
+        //console.log(parseScore);
         const newPlay = await Play.create({
           score,
           errors,
@@ -43,6 +46,7 @@ const playingController = {
           user_id,
           theme_id
         });
+
 
         res.status(201).json(newPlay);
       } catch (error) {
