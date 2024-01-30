@@ -6,10 +6,11 @@ const verifyJwt = require('./verifyJwt.middleware');
 const userAlreadyExist = require('./userAlreadyExist.middleware');
 const verifyBodyRegister = require('./verifyBodyRegister.middleware');
 const themeAlreadyExist = require('./themeAlreadyExist.middleware');
-const verifyBodyRiddle = require('./riddleAlreadyExist.middleware');
+const verifyBodyRiddle = require('./verifyBodyRiddle.middleware');
 const riddleAlreadyExist = require('./riddleAlreadyExist.middleware');
-const verifyDuplicate = require('./verifyDuplicate.middleware');
 const verifyUserProfile = require('./verifyUserProfile.middleware');
+const profileAlreadyExist = require('./profileAlreadyExist.middleware');
+const verifyBodyProfile = require('./verifyBodyProfile.middleware');
 const scoreAllReadyExist = require('./scoreAlreadyExist.middleware');
 
 
@@ -22,9 +23,9 @@ module.exports = {
   themeAlreadyExist, 
   verifyBodyRiddle, 
   riddleAlreadyExist, 
-  verifyDuplicate, 
-  verifyUserProfile, 
+  verifyUserProfile,
+  profileAlreadyExist,
+  verifyBodyProfile,
   scoreAllReadyExist
-
 };
 

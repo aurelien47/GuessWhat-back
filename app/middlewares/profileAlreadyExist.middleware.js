@@ -1,27 +1,25 @@
-const { User } = require('../models');
+const { User } = require ('../models');
+
 
 const profileAlreadyExist = async (req, res, next) => {
-    const alreadyExistEmail = await User.findOne({
-        where : {
-            email : req.body.email
-        }
-    });
-
-    if(alreadyExistEmail) {
-        return res.status(400).json({error : 'Un utilisateur avec cet email existe déjà !'})
-    };
-
-    const alreadyExistUsername = await User.findOne({
-        where : {
-            username : req.body.username
-        }
-    });
-
-    if(alreadyExistUsername) {
-        return res.status(400).json({error : 'Un utilisateur avec ce pseudo existe déjà !'})
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: ["password","id", "username", "email"]
+    }); 
+  
+    if (!user) {
+      return res.status(404).json({error:'Utilisateur non trouvé'});
     }
+    console.log('user', user.password)
+    req.user = user;
 
     next();
-};
+
+  } catch (error) {
+    return res.status(400).json({error: 'Le profil existe déjà'})
+  }
+
+
+}
 
 module.exports = profileAlreadyExist;
