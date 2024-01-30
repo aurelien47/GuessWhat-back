@@ -1,3 +1,6 @@
+//l'index des middlewares est utilisé comme un point d'entrée pour toutes les middlewares de l'application.
+
+//impotation des middlewares
 const isAdmin = require('./isAdmin.middleware');
 const verifyJwt = require('./verifyJwt.middleware');
 const userAlreadyExist = require('./userAlreadyExist.middleware');
@@ -10,7 +13,7 @@ const verifyUserProfile = require('./verifyUserProfile.middleware');
 const scoreAllReadyExist = require('./scoreAlreadyExist.middleware');
 
 
-
+//exportation des middlewares
 module.exports = { 
   isAdmin, 
   verifyJwt, 

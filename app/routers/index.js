@@ -1,3 +1,6 @@
+// l'index des routes est utilisé comme un point d'entrée pour toutes les routes de l'application.
+
+
 const express = require('express');
 const authRouter = require('./auth.router');
 const adminRouter = require('./admin.router');

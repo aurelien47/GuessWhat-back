@@ -3,7 +3,7 @@ const router = express.Router(); // creation routeur avec express.Router()
 //const userProfile = require('../controllers/profile.controller'); // on importe userprofile controller
 const { verifyUserProfile, scoreAllReadyExist } = require('../middlewares'); // on importe userProfile middleware
 const{ getUserProfile, modifyOneUserProfile, deleteOneUserProfile } = require('../controllers/profile.controller'); // on importe getUserProfile controller
-const { getUserAllScore, addScore, getScoreByTheme } = require('../controllers/playing.controller');
+const { getUserPlayHistory, addPlay, getAllBestPlayByTheme } = require('../controllers/playing.controller');
 
 
 /******* Gestion Profile **********/
@@ -19,16 +19,15 @@ router.delete('/profile/:id', verifyUserProfile, deleteOneUserProfile); // route
 
 /********* Gestion sessions de jeux ********/
 
-router.post('/play', scoreAllReadyExist, addScore); // passe par scoringMiddleware avant d'aller dans le controller scoring
+// Enregistrer les sessions de jeu (score, indice utilisé, nb erreur)
+router.post('/play', scoreAllReadyExist, addPlay); // passe par scoringMiddleware avant d'aller dans le controller scoring
 
-router.get('/:id/play', getUserAllScore); // passe par scoringMiddleware avant d'aller dans le controller scoring
+// Récupère l'archivage de toutes les session pour un profil
+router.get('/profile/:id/play', getUserPlayHistory); // passe par scoringMiddleware avant d'aller dans le controller scoring
 
-router.get('/play/theme/:id',  scoreAllReadyExist, getScoreByTheme);
+// Page classement en fonction du thème
+router.get('/theme/:id/play',  scoreAllReadyExist, getAllBestPlayByTheme);
 
 
 
 module.exports = router; // on exporte le router
-
-
-
-
