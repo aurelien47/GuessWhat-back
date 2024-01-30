@@ -2,9 +2,10 @@
 
 const { User, Theme } = require('../models');
 
-const verifyUserAndTheme = async (req, res, next) => {
+const scoreAllReadyExist = async (req, res, next) => {
+  console.log(req.user)
   try {
-    const userId = req.body.user_id || req.params.user_id;
+    const userId = req.user.id;
     const themeId = req.body.theme_id || req.params.theme_id;
 
     const userExists = await User.findByPk(userId);
@@ -22,4 +23,4 @@ const verifyUserAndTheme = async (req, res, next) => {
   }
 };
 
-module.exports = verifyUserAndTheme;
+module.exports = scoreAllReadyExist;

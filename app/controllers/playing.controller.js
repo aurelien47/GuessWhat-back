@@ -1,4 +1,5 @@
 const { Play, User, Theme } = require('../models'); // on va chercher le model play pour les score en BDD
+const { Sequelize } = require('sequelize');
 
 const playingController = {
   async getUserPlayHistory (req, res){ 
@@ -10,9 +11,10 @@ const playingController = {
         include: [{
           model: Theme,
           attributes: ['name'],
+          as: 'quiz'
         }],
         where: { user_id },
-        order: [['createdAt', DESC]]
+        order: [['createdAt', 'DESC']]
       });
 
       // if (userScores.length === 0) {
@@ -51,27 +53,20 @@ const playingController = {
 
     async getLeaderboard (req, res) { 
       try {
-        const { theme_id } = req.params;
+        const theme_id = req.params.id;
         
         const topScores = await Play.findAll({
-          attributes: [[
-            Sequelize.fn('DISTINCT ON', Sequelize.col('user_id')), 'user_id'
-          ]],
-          include: [{
-            model: User,
-            attributes: ['username']
-          }],
+          include: 'player',
           where: {
             theme_id
           },
           order: [
-            [Sequelize.col('user_id'), 'ASC'],
             ['score', 'DESC']
           ],
           limit: 3
         });
   
-        if (themeScores.length === 0) {
+        if (topScores.length === 0) {
           return res.status(404).json({ message: "Aucun score trouvé pour ce thème" });
         }
   

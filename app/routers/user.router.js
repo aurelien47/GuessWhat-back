@@ -1,7 +1,7 @@
 const express = require('express'); // on importe express                              
 const router = express.Router(); // creation routeur avec express.Router() 
 //const userProfile = require('../controllers/profile.controller'); // on importe userprofile controller
-const { verifyUserProfile, profileAlreadyExist, verifyBodyProfile} = require('../middlewares'); // on importe userProfile middleware
+const { verifyUserProfile, profileAlreadyExist, verifyBodyProfile, scoreAllReadyExist} = require('../middlewares'); // on importe userProfile middleware
 const{ getUserProfile, modifyOneUserProfile, deleteOneUserProfile } = require('../controllers/profile.controller'); // on importe getUserProfile controller
 const { getUserPlayHistory, addPlay, getAllBestPlayByTheme } = require('../controllers/playing.controller');
 

@@ -6,7 +6,6 @@ const authRouter = require('./auth.router');
 const adminRouter = require('./admin.router');
 const mainRouter = require('./main.router');
 const userRouter = require('./user.router');
-const playRouter = require('./play.router');
 
 const { isAdmin, verifyJwt } = require('../middlewares');
 
@@ -20,7 +19,6 @@ router.use(mainRouter);
 // route pour l'authentification
 router.use(authRouter);
 router.use('/user', verifyJwt, userRouter);
-router.use('/score', verifyJwt, playRouter);// passe par verifyJwt, et scrore.router
 router.use('/admin', verifyJwt, isAdmin, adminRouter);
 
 
