@@ -80,9 +80,6 @@ const playingController = {
           limit: 3
         });
   
-        if (topScores.length === 0) {
-          return res.status(404).json({ message: "Aucun score trouvé pour ce thème" });
-        }
   
         res.json(topScores);
       } catch (error) {
