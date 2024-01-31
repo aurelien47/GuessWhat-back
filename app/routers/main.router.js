@@ -1,6 +1,5 @@
 const express = require('express');
 const { getAllTheme, getOneTheme } = require ('../controllers/main.controller');
-const { scoreAllReadyExist } = require('../middlewares'); // on importe le middleware scoringMiddleware  
 const { getLeaderboard } = require('../controllers/playing.controller');
 
 

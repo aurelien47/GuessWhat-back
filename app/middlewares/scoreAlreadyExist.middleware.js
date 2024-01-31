@@ -1,5 +1,3 @@
-
-
 const { User, Theme } = require('../models');
 
 const scoreAllReadyExist = async (req, res, next) => {

@@ -26,7 +26,7 @@ router.post('/play', scoreAllReadyExist, addPlay); // passe par scoringMiddlewar
 router.get('/profile/:id/play', getUserPlayHistory); // passe par scoringMiddleware avant d'aller dans le controller scoring
 
 // Page classement en fonction du thème
-router.get('/theme/:id/play',  scoreAllReadyExist, getAllBestPlayByTheme);
+router.get('/theme/:id/play', getAllBestPlayByTheme);
 
 
 
