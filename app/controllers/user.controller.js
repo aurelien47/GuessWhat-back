@@ -57,7 +57,7 @@ const userController = {
 
   const token = generateToken(user); 
 
-  res.status(200).json({token});
+  res.status(200).json({status: "success", token});
 
   }catch(error){
     console.error(err);
