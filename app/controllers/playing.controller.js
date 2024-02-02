@@ -1,4 +1,3 @@
-const { parse } = require('dotenv');
 const { Play, User, Theme } = require('../models'); // on va chercher le model play pour les score en BDD
 const { Sequelize } = require('sequelize');
 
@@ -100,7 +99,7 @@ const playingController = {
           return res.status(404).json({error: 'Le thème spécifié n\'existe pas'});
         }
 
-        const bestPlays = await Play.findAll({
+        /*const bestPlays = await Play.findAll({
           attributes: [[Sequelize.fn('MAX', Sequelize.col('score')), 'maxScore'], 'errors', 'count_indicators'],
           include: [{
             model: User,
@@ -111,15 +110,80 @@ const playingController = {
             theme_id
           },
           group: ['player.id','Play.errors', 'Play.count_indicators'],
-          order: [['maxScore', 'DESC']]
-        })
+          order: [['maxScore', 'DESC']],
+        })*/
+
+        const bestPlays = await User.findAll({
+          attributes: [
+            'username',
+            [
+              Sequelize.literal('(SELECT MAX("score") FROM "play" WHERE "user_id" = "User"."id" AND "theme_id" = :theme_id)'),
+              'maxScore'
+            ],
+            [Sequelize.literal('(SELECT "errors" FROM "play" WHERE "user_id" = "User"."id" AND "theme_id" = :theme_id ORDER BY "score" DESC LIMIT 1)'), 'errors'],
+            [Sequelize.literal('(SELECT "count_indicators" FROM "play" WHERE "user_id" = "User"."id" AND "theme_id" = :theme_id ORDER BY "score" DESC LIMIT 1)'), 'count_indicators']
+          ],
+          where: Sequelize.literal(`EXISTS (SELECT 1 FROM "play" WHERE "user_id" = "User"."id" AND "theme_id" = ${theme_id})`),
+          order: [[Sequelize.literal('"maxScore" DESC')]],
+          replacements: { theme_id },
+        });
+
+        /*const bestPlays = await Play.findAll({
+          attributes: ['score', 'errors', 'count_indicators'],
+          include: [
+            {
+              model: User,
+              as: 'player',
+              attributes: ['id', 'username'],
+            },
+          ],
+          where: {
+            theme_id
+          },
+          order: [['score', 'DESC']], // Ordonnez par score décroissant
+        });*/
+
+        /*const bestPlays = await User.findAll({
+          attributes: ['id', 'username'],
+          include: [
+            {
+              model: Play,
+              as: 'games',
+              attributes: [
+                'score',
+                'errors',
+                'count_indicators',
+                [Sequelize.literal('(SELECT MAX("score") FROM "play" AS "max_score" WHERE "max_score"."user_id" = "games"."user_id")'), 'max_score'],
+              ],
+            },
+          ],
+          order: [[Sequelize.literal('"games.max_score" DESC')]],
+        });*/
+
+        
+            /*const bestPlays = await User.findAll({
+              attributes: ['id', 'username'],
+              include: [
+                {
+                  model: Play,
+                  as: 'games',
+                  attributes: ['score', 'errors', 'count_indicators'],
+                  order: [['score', 'DESC']], // Ordonnez par score décroissant
+                  limit: 1, // Limitez à une seule ligne pour obtenir la meilleure
+                },
+              ],
+            },
+            {
+              where: theme_id
+            }
+            );*/
         
 
         if (bestPlays.length === 0) {
           return res.status(404).json({ message: "Aucun score trouvé" });
         }
   
-        res.json(bestPlays);
+        res.status(200).json(bestPlays);
       } catch (error) {
         console.error('Erreur dans bestPlays : ', error);
         res.status(500).json({ message: "Erreur lors de la récupération des scores" });
@@ -133,13 +197,4 @@ const playingController = {
 
 
 
-
-
-
-
-
-
-
 module.exports = playingController;
-
-
