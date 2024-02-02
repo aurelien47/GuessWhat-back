@@ -35,7 +35,7 @@ const adminController = {
 			};
 
 			await existTheme.destroy();
-			res.sendStatus(204);
+			res.status(200).json({status: 'success'});
 		} 
 		catch (error) {
 			console.error(error);
@@ -54,12 +54,14 @@ const adminController = {
 				indicator,
 				theme_id
 			});
+
 			const answersToCreate = answers.map((answer) => {
 				return {
 					...answer,
 					riddle_id: riddle.id
 				}
 			})
+			
 			const createdAnswers = await Answer.bulkCreate(answersToCreate);
 			console.log(`les réponses créé pour la riddle avec l'id ${riddle.id}`, createdAnswers)
 			return res.status(201).json({status: 'success'});
@@ -83,7 +85,7 @@ const adminController = {
 			};
 
 			await riddle.destroy(); //vu qu'on est en ondelete cascade cela supprimera les answer liéé
-			res.sendStatus(204);
+			res.status(200).json({status: 'success'});;
 		} 
 		catch (error) {
 			console.error(error);

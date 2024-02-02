@@ -52,7 +52,7 @@ CREATE TABLE play(
     "id" int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     "user_id" int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     "theme_id" int NOT NULL REFERENCES themes(id) ON DELETE CASCADE,
-    "score" int NOT NULL,
+    "score" decimal NOT NULL,
     "errors" int,
     "count_indicators" INT,
     "created_at" timestamptz NOT NULL DEFAULT NOW(),
