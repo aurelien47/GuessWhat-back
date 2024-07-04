@@ -59,7 +59,7 @@ const userController = {
 
   res.status(200).json({status: "success", token});
 
-  }catch(error){
+  }catch(err){
     console.error(err);
     return res.status(500).json({ error: err});
   }
