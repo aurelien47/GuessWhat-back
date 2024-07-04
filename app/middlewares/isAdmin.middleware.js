@@ -5,19 +5,25 @@
 const { User } = require("../models");
 
 const isAdmin = async (req, res, next) =>{ //fonction qui vérifie si l'utilisateur actuel a le rôle d'administrateur.
+  const userId = req.user.id; // ID utilisateur stocké dans le token JWT
+  try {
+    const user = await User.findByPk(userId, {include: 'role'}); //recherche l'utilisateur dans la base de données et inclut 
+    //le rôle associé à l'utilisateur
+    //console.log('mes données', user);
+    if(!user){
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
 
-  const id = req.user.id; //extrait l'ID de l'utilisateur à partir de l'objet req.user. 
-
-  const user = await User.findByPk(id, {include: 'role'}); //recherche l'utilisateur dans la base de données et inclut 
-  //le rôle associé à l'utilisateur
-  console.log('mes données', user);
-
-  if(user.role === "Admin"){ //vérifie si le rôle de l'utilisateur est "Admin"
-    next()
+    if (user.role.name === 'Admin') { // Vérifiez le nom du rôle
+      next();
+    } else {
+      return res.status(403).json({ error: "Erreur: utilisateur ne possède pas les droits d'administration" });
+    }
+  } 
+  catch (error) {
+    return res.status(500).json({ error: 'Erreur interne' });
   }
-  else{
-    return res.status(403).json({error: "Ressources non autorisé"});
-  }
+  
 };
 
 
