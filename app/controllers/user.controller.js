@@ -60,8 +60,8 @@ const userController = {
   res.status(200).json({status: "success", token});
 
   }catch(error){
-    console.error(err);
-    return res.status(500).json({ error: err});
+    console.error(error);
+    return res.status(500).json({ error: error});
   }
 
 },
