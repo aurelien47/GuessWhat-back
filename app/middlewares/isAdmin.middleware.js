@@ -10,8 +10,9 @@ const isAdmin = async (req, res, next) =>{ //fonction qui vérifie si l'utilisat
 
   const user = await User.findByPk(id, {include: 'role'}); //recherche l'utilisateur dans la base de données et inclut 
   //le rôle associé à l'utilisateur
+  console.log('mes données', user);
 
-  if(user.role.name === "Admin"){ //vérifie si le rôle de l'utilisateur est "Admin"
+  if(user.role === "Admin"){ //vérifie si le rôle de l'utilisateur est "Admin"
     next()
   }
   else{
